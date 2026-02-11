@@ -9,8 +9,8 @@ public abstract class BaseSchema<T> {
     private boolean required;
     private final Map<String, Predicate<T>> checks = new LinkedHashMap<>();
 
-    protected BaseSchema(Class<?> type) {
-        this.type = type;
+    protected BaseSchema(Class<?> schemaType) {
+        this.type = schemaType;
     }
 
     protected final void addCheck(String key, Predicate<T> predicate) {
