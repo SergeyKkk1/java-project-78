@@ -11,3 +11,63 @@ make build
 ```
 After creation of `jar` file, you can add it into project which 
 requires data validation and use it there.
+
+## Documentation
+### String validation
+- `required()` — makes null/empty string invalid.
+- `minLength(int)` — enforces minimum string length.
+- `contains(String)` — requires substring to be present.
+
+```java
+var v = new Validator();
+var schema = v.string().required().minLength(4).contains("ex");
+
+schema.isValid("hexlet"); // true
+schema.isValid("hey");    // false
+```
+
+### Number validation
+- `required()` — makes null invalid.
+- `positive()` — allows only numbers > 0.
+- `range(int, int)` — enforces inclusive bounds.
+```java
+var v = new Validator();
+var schema = v.number().required().positive().range(5, 10);
+
+schema.isValid(5);   // true
+schema.isValid(0);   // false
+schema.isValid(11);  // false
+```
+
+### Map validation schema
+- `required()` — makes null invalid.
+- `sizeof(int)` — requires exact map size.
+- `shape(Map<String, BaseSchema<?>>)` — validates map values by per-key schemas.
+
+```java
+var v = new Validator();
+var schema = v.map().required().sizeof(2);
+
+var data = new HashMap<String, String>();
+data.put("key1", "value1");
+data.put("key2", "value2");
+
+schema.isValid(data); // true
+```
+#### Map shape validation
+```java
+var v = new Validator();
+var schema = v.map();
+
+Map<String, BaseSchema<String>> schemas = new HashMap<>();
+schemas.put("firstName", v.string().required());
+schemas.put("lastName", v.string().required().minLength(2));
+
+schema.shape(schemas);
+
+Map<String, String> human = new HashMap<>();
+human.put("firstName", "John");
+human.put("lastName", "Smith");
+
+schema.isValid(human); // true
+```
