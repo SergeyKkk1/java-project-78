@@ -1,40 +1,33 @@
 package hexlet.code;
 
-public class StringSchema {
-    private boolean required = false;
-    private int minLength = 0;
-    private String mustContain = null;
+public class StringSchema extends BaseSchema<String> {
+
+    public StringSchema() {
+        super(String.class);
+    }
 
     public StringSchema required() {
-        this.required = true;
+        markRequired();
+        addCheck("notEmpty", value -> !value.isEmpty());
         return this;
     }
 
     public StringSchema contains(String value) {
-        this.mustContain = value;
+        if (value == null) {
+            addCheck("contains", _ -> true);
+            return this;
+        }
+
+        addCheck("contains", str -> str.contains(value));
         return this;
     }
 
     public StringSchema minLength(int minLength) {
-        if (minLength >= 0) {
-            this.minLength = minLength;
+        if (minLength < 0) {
+            return this;
         }
+
+        addCheck("minLength", value -> value.length() >= minLength);
         return this;
-    }
-
-    public boolean isValid(String validatingString) {
-        if (validatingString == null) {
-            return !required;
-        }
-
-        if (required && validatingString.isEmpty()) {
-            return false;
-        }
-
-        if (minLength > 0 && validatingString.length() < minLength) {
-            return false;
-        }
-
-        return mustContain == null || validatingString.contains(mustContain);
     }
 }
