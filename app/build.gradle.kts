@@ -37,5 +37,7 @@ sonar {
     properties {
         property("sonar.projectKey", "SergeyKkk1_java-project-78")
         property("sonar.organization", "sergeykkk1")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
