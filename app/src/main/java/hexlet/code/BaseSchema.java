@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    private final Class<T> type;
+    private final Class<?> type;
     private boolean required;
     private final Map<String, Predicate<T>> checks = new LinkedHashMap<>();
 
-    protected BaseSchema(Class<T> type) {
+    protected BaseSchema(Class<?> type) {
         this.type = type;
     }
 
@@ -30,7 +30,8 @@ public abstract class BaseSchema<T> {
             return false;
         }
 
-        T castedValue = type.cast(value);
+        @SuppressWarnings("unchecked")
+        T castedValue = (T) value;
         for (Predicate<T> check : checks.values()) {
             if (!check.test(castedValue)) {
                 return false;
