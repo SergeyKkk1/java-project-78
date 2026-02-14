@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ValidatorTest {
+class StringSchemaTest {
     private static final int MIN_LENGTH = 4;
     private static final int MIN_LENGTH_MEDIUM = 5;
     private static final int MIN_LENGTH_LONG = 10;

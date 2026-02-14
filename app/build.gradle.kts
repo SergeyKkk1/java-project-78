@@ -1,5 +1,5 @@
 plugins {
-    application
+    java
     checkstyle
     id("org.sonarqube") version "7.1.0.6387"
     id ("com.github.ben-manes.versions") version "0.53.0"
